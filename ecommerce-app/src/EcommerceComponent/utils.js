@@ -1,0 +1,1 @@
+export const filterTypes = ["Category,Customer Rating"];
