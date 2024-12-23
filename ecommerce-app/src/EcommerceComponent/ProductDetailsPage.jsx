@@ -6,6 +6,7 @@ import { addToCart } from "../redux/cartSlice";
 import HeaderComponent from "../shared/headerComponent";
 import { toast } from "react-toastify";
 import useCartQuantities from "../shared/useCartQuantities";
+import PlaceHolderImage from '../assets/productImage.webp';
 
 const ProductDetails = () => {
   const location = useLocation();
@@ -34,7 +35,6 @@ const ProductDetails = () => {
     }
   };
 
-
   const handleAddToCart = () => {
     dispatch(
       addToCart({
@@ -53,55 +53,60 @@ const ProductDetails = () => {
 
   return (
     <>
-    <HeaderComponent currentComponent={"Website"} cartCount = {totalQuantity}/>
+      <HeaderComponent currentComponent={"Website"} cartCount={totalQuantity} />
 
-    <div className="flex flex-row lg:flex-row gap-8 p-6">
-      <div className="w-full h-80 lg:w-1/2 bg-gray-300">
-        <img className="bg-gray-300 rounded-md shadow" scr = {productDetails?.image} alt = {productDetails?.title}/>
-      </div>
+      <div className="flex flex-row lg:flex-row gap-8 p-6">
+        <div className="w-full h-80 lg:w-1/2 bg-gray-300">
+          <img
+            className="w-full h-full object-fit rounded-md"
+            src={PlaceHolderImage}
+            alt={productDetails?.title}
+          />
+        </div>
 
-      <div className="w-full lg:w-1/2 flex flex-col">
-        <h1 className="text-3xl font-bold mb-2">{productDetails?.title}</h1>
-        <p className="text-xl font-semibold mb-4">${productDetails?.price}</p>
+        <div className="w-full lg:w-1/2 flex flex-col">
+          <h1 className="text-3xl font-bold mb-2">{productDetails?.title}</h1>
+          <p className="text-xl font-semibold mb-4">${productDetails?.price}</p>
 
-        <p className="text-gray-600 mb-4">
-        {productDetails?.description}
-        </p>
+          <p className="text-gray-600 mb-4">{productDetails?.description}</p>
 
-        <div className="flex items-center gap-4 mb-4">
-          <span className="text-gray-700 font-medium">Quantity</span>
-          <div className="flex items-center">
-            <button
-              onClick={() => handleQuantityChange("decrement")}
-              className="px-4 py-2 bg-gray-200 rounded-l-md hover:bg-gray-300"
-            >
-              −
-            </button>
-            <input
-              type="text"
-              readOnly
-              value={quantity}
-              className="w-12 text-center border-t border-b border-gray-300"
-            />
-            <button
-              onClick={() => handleQuantityChange("increment")}
-              className="px-4 py-2 bg-gray-200 rounded-r-md hover:bg-gray-300"
-            >
-              +
-            </button>
+          <div className="flex items-center gap-4 mb-4">
+            <span className="text-gray-700 font-medium">Quantity</span>
+            <div className="flex items-center">
+              <button
+                onClick={() => handleQuantityChange("decrement")}
+                className="px-4 py-2 bg-gray-200 rounded-l-md hover:bg-gray-300"
+              >
+                −
+              </button>
+              <input
+                type="text"
+                readOnly
+                value={quantity}
+                className="w-12 text-center border-t border-b border-gray-300"
+              />
+              <button
+                onClick={() => handleQuantityChange("increment")}
+                className="px-4 py-2 bg-gray-200 rounded-r-md hover:bg-gray-300"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <button
+            className="bg-black text-white font-bold py-3 rounded-md w-full mb-4"
+            onClick={handleAddToCart}
+          >
+            Add to Cart - ${productDetails?.price * quantity}
+          </button>
+
+          <div className="flex justify-between text-gray-500 text-sm">
+            <span>Free standard shipping</span>
+            <span>Free Returns</span>
           </div>
         </div>
-
-        <button className="bg-black text-white font-bold py-3 rounded-md w-full mb-4" onClick={handleAddToCart}>
-          Add to Cart - ${productDetails?.price * quantity}
-        </button>
-
-        <div className="flex justify-between text-gray-500 text-sm">
-          <span>Free standard shipping</span>
-          <span>Free Returns</span>
-        </div>
       </div>
-    </div>
     </>
   );
 };

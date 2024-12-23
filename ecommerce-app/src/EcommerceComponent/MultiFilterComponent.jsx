@@ -14,7 +14,6 @@ const MultiFilterComponent = (props) => {
     price: { minPrice: null, maxPrice: null },
   });
   const filtersRedux = useSelector((state) => state.filters.selectedFilters);
-
   const fetchCategories = async () => {
     try {
       const response = await getProductCategories();
@@ -53,6 +52,7 @@ const MultiFilterComponent = (props) => {
   };
 
   const ApplyAndValidate = () => {
+    setEnableApplyCTA(false);
     setPriceError(
       Number(selectedFilters?.price.minPrice) >
         Number(selectedFilters?.price.maxPrice)
@@ -98,7 +98,7 @@ const MultiFilterComponent = (props) => {
   }, []);
 
   return (
-    <div className="w-64">
+    <div className="w-64 flex flex-col justify-center">
       <div className="flex justify-between">
         <span className="text-[1.2rem] font-bold">Filters</span>
         <span
@@ -142,7 +142,6 @@ const MultiFilterComponent = (props) => {
             </div>
           );
         })}
-
         <div className="mb-6">
           <h2 className="font-bold text-lg mb-2">Price Range</h2>
           <div className="flex space-x-2">
@@ -167,7 +166,7 @@ const MultiFilterComponent = (props) => {
         </div>
       </div>
       <button
-        className={`w-full p-2 rounded-md ${
+        className={`w-[80%] p-2 rounded-md mx-auto mt-[0.2rem] ${
           enableApplyCTA
             ? "bg-blue-500 text-white"
             : "bg-gray-400 text-gray-700 cursor-not-allowed"

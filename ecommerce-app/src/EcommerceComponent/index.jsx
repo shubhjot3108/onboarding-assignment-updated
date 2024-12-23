@@ -5,7 +5,7 @@ import ProductItem from "./ProductItem";
 import { getProductList } from "../services/getproductList";
 import { useNavigate } from "react-router-dom";
 import useCartQuantities from "../shared/useCartQuantities";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "../redux/filterSlice";
 
 const ProductsPage = () => {
@@ -14,6 +14,7 @@ const ProductsPage = () => {
   const [productsData, setProductsData] = useState([]);
   const [showLoadMoreCTA, setShowLoadMoreCTA] = useState(false);
   const [currentPageValue, setCurrentPage] = useState(1);
+  const [noProductsFound, setNoProductsFound] = useState(false);
   const [currentCategoryString, setCurrentCategoryString] = useState("");
   const [price, setPrice] = useState({ minPrice: 0, maxPrice: 5000 });
   const { totalQuantity } = useCartQuantities();
@@ -32,6 +33,11 @@ const ProductsPage = () => {
         maxPrice,
       });
       const { currentPage, totalPages, products } = response;
+      if (totalPages === 0) {
+        setNoProductsFound(true);
+        return;
+      }
+      setNoProductsFound(false);
       currentPageNumber > 1
         ? setProductsData((prevProducts) => [...prevProducts, ...products])
         : setProductsData(products);
@@ -39,6 +45,7 @@ const ProductsPage = () => {
       setShowLoadMoreCTA(currentPage < totalPages);
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+      setNoProductsFound(true);
     }
   };
 
@@ -46,7 +53,10 @@ const ProductsPage = () => {
     dispatch(
       setFilters({
         Categories: selectedFilters.Categories,
-        price: { minPrice: selectedFilters?.price.minPrice, maxPrice: selectedFilters?.price.maxPrice },
+        price: {
+          minPrice: selectedFilters?.price.minPrice,
+          maxPrice: selectedFilters?.price.maxPrice,
+        },
       })
     );
     const categoriesString = selectedFilters.Categories.join(",");
@@ -113,24 +123,31 @@ const ProductsPage = () => {
 
         <div className="flex flex-col items-center h-[80vh] overflow-y-auto">
           {" "}
-          <div
-            className="flex flex-wrap gap-4 scrollable-div"
-            onClick={handleProductClick}
-          >
-            {productsData?.map((product) => (
-              <div
-                className="product-card"
-                key={product.id}
-                data-id={product.id}
-              >
-                <ProductItem
+          {noProductsFound ? (
+            <span className="text-[1.4rem] font-bold mt-[10rem] mr-[12rem] w-[24rem] text-center">
+              No Product founds for this selection, Please change your selection
+              and try again!
+            </span>
+          ) : (
+            <div
+              className="flex flex-wrap gap-4 scrollable-div"
+              onClick={handleProductClick}
+            >
+              {productsData?.map((product) => (
+                <div
+                  className="product-card"
                   key={product.id}
-                  product={product}
                   data-id={product.id}
-                />
-              </div>
-            ))}
-          </div>
+                >
+                  <ProductItem
+                    key={product.id}
+                    product={product}
+                    data-id={product.id}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
           {showLoadMoreCTA && (
             <button
               className=" w-[16rem] mt-[1.6rem] border-2 border-gray-500 text-black px-2 py-2 rounded hover:bg-gray-200"
