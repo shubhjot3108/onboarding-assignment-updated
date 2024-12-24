@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import HeaderComponent from "../shared/headerComponent";
 import { toast } from "react-toastify";
 import useCartQuantities from "../shared/useCartQuantities";
+import PlaceHolderImage from "../assets/productImage.webp";
+
 
 const MyCart = () => {
   const dispatch = useDispatch();
@@ -24,11 +26,9 @@ const MyCart = () => {
     navigate(`/checkout`);
   };
 
-
-
   return (
     <>
-      <HeaderComponent currentComponent={"My Cart"} cartCount = {totalQuantity}/>
+      <HeaderComponent currentComponent={"My Cart"} cartCount={totalQuantity} />
 
       <div className="container mx-auto p-6">
         <div className="grid grid-cols-3 gap-8">
@@ -43,7 +43,16 @@ const MyCart = () => {
             {cartItems.length ? (
               cartItems.map((item) => (
                 <div key={item.id} className="flex items-center border-b py-4">
-                  <div className="w-24 h-24 bg-gray-300 rounded-md"></div>
+                  <div className="w-24 h-24 bg-gray-300 rounded-md">
+                    <img
+                      src={item?.image || PlaceHolderImage}
+                      alt={item.title}
+                      className="w-full h-full object-cover rounded-md"
+                      onError={(e) => {
+                        e.target.src = PlaceHolderImage;
+                      }}
+                    />
+                  </div>
                   <div className="ml-4 flex-1">
                     <h2 className="text-lg font-bold">{item.title}</h2>
                     <p className="text-sm text-gray-500">
