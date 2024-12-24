@@ -76,6 +76,7 @@ const MultiFilterComponent = (props) => {
   };
 
   const handleClearFilters = () => {
+    setEnableApplyCTA(true);
     setSelectedFilters({
       Categories: [],
       "Customer Rating": [],
