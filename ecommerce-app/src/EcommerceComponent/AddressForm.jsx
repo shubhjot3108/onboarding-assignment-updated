@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { validateAddressFormData } from "./utils";
 
 const AddressForm = (props) => {
   const { handleSubmit, nextButtonText } = props;
@@ -22,17 +23,9 @@ const AddressForm = (props) => {
   };
 
   const validate = () => {
-    const newErrors = {};
-
-    if (!formData.firstName) newErrors.firstName = "First name is required.";
-    if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.address) newErrors.address = "Address is required.";
-    if (!formData.city) newErrors.city = "City is required.";
-    if (!formData.zipcode) newErrors.zipcode = "Zipcode is required.";
-    if (!formData.country) newErrors.country = "Country is required.";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+      const newErrors = validateAddressFormData(formData);
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
   };
 
   const onSubmit = (e) => {
