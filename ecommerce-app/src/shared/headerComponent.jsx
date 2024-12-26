@@ -1,5 +1,6 @@
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { PATHS, COMPONENT_NAMES } from "./constants";
 
 const HeaderComponent = (props) => {
   const { currentComponent, cartCount = 0 } = props;
@@ -9,21 +10,29 @@ const HeaderComponent = (props) => {
     <div className="flex justify-between border-b p-2">
       <div className="flex justify-between cursor-pointer">
         <p
-          className={`mr-4 ${currentComponent === "Home" ? "font-bold" : ""}`}
-          onClick={() => navigate(`/`)}
+          className={`mr-4 ${
+            currentComponent === COMPONENT_NAMES.HOME ? "font-bold" : ""
+          }`}
+          onClick={() => navigate(PATHS.HOME)}
         >
-          Home
+          {COMPONENT_NAMES.HOME}
         </p>
         <p
-          className={`${currentComponent === "My Orders" ? "font-bold" : ""}`}
-          onClick={() => navigate(`/orders`)}
+          className={`${
+            currentComponent === COMPONENT_NAMES.MY_ORDERS ? "font-bold" : ""
+          }`}
+          onClick={() => navigate(PATHS.ORDERS)}
         >
-          My Orders
+         {COMPONENT_NAMES.MY_ORDERS}
         </p>
       </div>
-      <div className="cursor-pointer" onClick={() => navigate(`/cart`)}>
-        <p className={`${currentComponent === "My Cart" ? "font-bold" : ""}`}>
-          {`My Cart (${cartCount})`}
+      <div className="cursor-pointer" onClick={() => navigate(PATHS.CART)}>
+        <p
+          className={`${
+            currentComponent === COMPONENT_NAMES.MY_CART ? "font-bold" : ""
+          }`}
+        >
+          {`${COMPONENT_NAMES.MY_CART} (${cartCount})`}
         </p>
       </div>
     </div>

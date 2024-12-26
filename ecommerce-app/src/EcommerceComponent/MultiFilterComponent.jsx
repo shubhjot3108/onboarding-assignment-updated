@@ -83,12 +83,9 @@ const MultiFilterComponent = (props) => {
       price: { minPrice: "", maxPrice: "" },
     });
   };
-
+  
   useEffect(() => {
     fetchCategories();
-  }, []);
-
-  useEffect(() => {
     if (
       filtersRedux.Categories.length > 0 ||
       filtersRedux.price.minPrice ||
@@ -175,7 +172,7 @@ const MultiFilterComponent = (props) => {
         onClick={enableApplyCTA ? ApplyAndValidate : null}
       >
         Apply Filters
-      </button>{" "}
+      </button>
     </div>
   );
 };

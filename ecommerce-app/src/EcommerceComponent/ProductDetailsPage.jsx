@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getProductDetails } from "../services/getProductDetails";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
-import HeaderComponent from "../shared/headerComponent";
-import { toast } from "react-toastify";
 import useCartQuantities from "../shared/useCartQuantities";
+import HeaderComponent from "../shared/headerComponent";
 import PlaceHolderImage from '../assets/productImage.webp';
 
 const ProductDetails = () => {
@@ -60,7 +60,7 @@ const ProductDetails = () => {
           <img
             className="w-full h-full object-fit rounded-md"
             src={PlaceHolderImage}
-            alt={productDetails?.title}
+            alt={productDetails.title}
           />
         </div>
 

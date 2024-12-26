@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import useCartQuantities from "../shared/useCartQuantities";
 import PlaceHolderImage from "../assets/productImage.webp";
 
-
 const MyCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,12 +40,12 @@ const MyCart = () => {
               </a>
             </p>
             {cartItems.length ? (
-              cartItems.map((item) => (
-                <div key={item.id} className="flex items-center border-b py-4">
+              cartItems.map(({ id, image, title, size, quantity, price }) => (
+                <div key={id} className="flex items-center border-b py-4">
                   <div className="w-24 h-24 bg-gray-300 rounded-md">
                     <img
-                      src={item?.image || PlaceHolderImage}
-                      alt={item.title}
+                      src={image || PlaceHolderImage}
+                      alt={title}
                       className="w-full h-full object-cover rounded-md"
                       onError={(e) => {
                         e.target.src = PlaceHolderImage;
@@ -54,20 +53,29 @@ const MyCart = () => {
                     />
                   </div>
                   <div className="ml-4 flex-1">
-                    <h2 className="text-lg font-bold">{item.title}</h2>
+                    <h2 className="text-lg font-bold">{title}</h2>
                     <p className="text-sm text-gray-500">
-                      Size: {item.size || "N/A"}
+                      Size: {size || "N/A"}
                     </p>
                     <p className="text-sm text-gray-500">
-                      Quantity: {item.quantity}
+                      Quantity: {quantity}
                     </p>
                     <p className="text-lg font-bold mt-2">
-                      ${item.price * item.quantity}
+                      ${price * quantity}
                     </p>
                   </div>
                   <div className="ml-auto">
                     <button
-                      onClick={() => handleRemoveItem(item)}
+                      onClick={() =>
+                        handleRemoveItem({
+                          id,
+                          image,
+                          title,
+                          size,
+                          quantity,
+                          price,
+                        })
+                      }
                       className="text-blue-500 hover:underline"
                     >
                       Remove
