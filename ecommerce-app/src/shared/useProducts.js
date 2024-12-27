@@ -71,8 +71,8 @@ const useProducts = () => {
       setFilters({
         Categories: selectedFilters.Categories,
         price: {
-          minPrice: selectedFilters?.price.minPrice,
-          maxPrice: selectedFilters?.price.maxPrice,
+          minPrice: selectedFilters.price.minPrice,
+          maxPrice: selectedFilters.price.maxPrice,
         },
       })
     );
@@ -94,8 +94,8 @@ const useProducts = () => {
       filtersRedux.price.maxPrice
     ) {
       const categoriesStringRedux = filtersRedux?.Categories.join(",");
-      const minPriceUpdatedRedux = filtersRedux?.price.minPrice;
-      const maxPriceUpdatedRedux = filtersRedux?.price.maxPrice;
+      const minPriceUpdatedRedux = filtersRedux.price.minPrice;
+      const maxPriceUpdatedRedux = filtersRedux.price.maxPrice;
 
       fetchProductsHandler({
         categoriesString: categoriesStringRedux,

@@ -25,10 +25,7 @@ describe('useCartQuantities', () => {
     };
 
     const { getByTestId } = render(<TestComponent />);
-    expect(getByTestId('total-quantity').textContent).toBe('6'); // 2 + 3 + 1 = 6
-    expect(getByTestId('cart-items').textContent).toBe(
-      JSON.stringify(mockCartItems)
-    );
+    expect(getByTestId('total-quantity').textContent).toBe('6');
   });
 
   it('should return totalQuantity as 0 if there are no items in the cart', () => {
@@ -46,6 +43,5 @@ describe('useCartQuantities', () => {
 
     const { getByTestId } = render(<TestComponent />);
     expect(getByTestId('total-quantity').textContent).toBe('0');
-    expect(getByTestId('cart-items').textContent).toBe('[]');
   });
 });

@@ -4,14 +4,14 @@ import { removeFromCart } from "../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import HeaderComponent from "../shared/headerComponent";
 import { toast } from "react-toastify";
-import useCartQuantities from "../shared/useCartQuantities";
 import PlaceHolderImage from "../assets/productImage.webp";
+import useProductDetails from "../shared/useProductDetails";
 
 const MyCart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.items);
-  const { totalQuantity } = useCartQuantities();
+  const { totalQuantity } = useProductDetails();
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0

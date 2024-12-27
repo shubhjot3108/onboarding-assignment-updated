@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import HeaderComponent from "../shared/headerComponent";
 import { useNavigate } from "react-router-dom";
 import { addOrder } from "../redux/ordersSlice";
-import useCartQuantities from "../shared/useCartQuantities";
+import useProductDetails from "../shared/useProductDetails";
 import { clearCart } from "../redux/cartSlice";
 import { toast } from "react-toastify";
 const AddressForm = lazy(() => import("./AddressForm"));
@@ -27,7 +27,7 @@ const Checkout = () => {
     cvc: "",
   });
   
-  const { totalQuantity } = useCartQuantities();
+  const { totalQuantity } = useProductDetails();
   const cartItems = useSelector((state) => state.cart.items);
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,

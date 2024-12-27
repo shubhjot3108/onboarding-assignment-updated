@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { getProductDetails } from "../services/getProductDetails";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { addToCart } from "../redux/cartSlice";
 
-const useProductDetails = (productId) => {
+const useProductDetails = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const productId = queryParams.get("productId");
   const [productDetails, setProductDetails] = useState({});
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const totalQuantity = cartItems?.reduce((total, item) => total + item.quantity, 0);
 
   const fetchProductDetails = async (productIdKey) => {
     try {
@@ -42,6 +48,7 @@ const useProductDetails = (productId) => {
     quantity,
     setQuantity,
     addToCartHandler,
+    totalQuantity,
   };
 };
 

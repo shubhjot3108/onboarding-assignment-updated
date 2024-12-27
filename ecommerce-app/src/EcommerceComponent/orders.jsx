@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import HeaderComponent from "../shared/headerComponent";
-import useCartQuantities from "../shared/useCartQuantities";
+import useProductDetails from "../shared/useProductDetails";
 
 const Orders = () => {
   const orders = useSelector((state) => state.orders.orders);
-  const { totalQuantity } = useCartQuantities();
+  const { totalQuantity } = useProductDetails();
 
   return (
     <>

@@ -52,7 +52,7 @@ const ProductsPage = () => {
               className="flex flex-wrap gap-4 scrollable-div"
               onClick={handleProductClick}
             >
-              {productsData?.map((product) => {
+              {productsData.map((product) => {
                 const { id } = product;
                 return (
                   <div className="product-card" key={id} data-id={id}>

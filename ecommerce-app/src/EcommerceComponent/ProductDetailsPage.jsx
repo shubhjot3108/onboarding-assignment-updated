@@ -1,18 +1,17 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
 import useProductDetails from "../shared/useProductDetails";
-import useCartQuantities from "../shared/useCartQuantities";
 import HeaderComponent from "../shared/headerComponent";
 import PlaceHolderImage from "../assets/productImage.webp";
 import QuantitySelector from "./QuantitySelector";
 
 const ProductDetails = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const productId = queryParams.get("productId");
-  const { productDetails, quantity, setQuantity, addToCartHandler } =
-    useProductDetails(productId);
-  const { totalQuantity } = useCartQuantities();
+  const {
+    productDetails,
+    quantity,
+    setQuantity,
+    addToCartHandler,
+    totalQuantity,
+  } = useProductDetails();
 
   return (
     <>
@@ -43,7 +42,7 @@ const ProductDetails = () => {
             className="bg-black text-white font-bold py-3 rounded-md w-full mb-4"
             onClick={addToCartHandler}
           >
-            Add to Cart - ${productDetails?.price * quantity}
+            Add to Cart - ${productDetails.price * quantity}
           </button>
 
           <div className="flex justify-between text-gray-500 text-sm">
