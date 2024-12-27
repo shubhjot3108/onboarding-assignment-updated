@@ -23,9 +23,9 @@ const AddressForm = (props) => {
   };
 
   const validate = () => {
-      const newErrors = validateAddressFormData(formData);
-      setErrors(newErrors);
-      return Object.keys(newErrors).length === 0;
+    const newErrors = validateAddressFormData(formData);
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const onSubmit = (e) => {
@@ -39,9 +39,12 @@ const AddressForm = (props) => {
     <form onSubmit={onSubmit}>
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="block mb-2 font-medium">First Name</label>
+          <label htmlFor="firstName" className="block mb-2 font-medium">
+            First Name
+          </label>
           <input
             type="text"
+            id="firstName"
             name="firstName"
             value={formData.firstName}
             onChange={handleInputChange}
@@ -52,9 +55,12 @@ const AddressForm = (props) => {
           )}
         </div>
         <div>
-          <label className="block mb-2 font-medium">Last Name</label>
+          <label htmlFor="lastName" className="block mb-2 font-medium">
+            Last Name
+          </label>
           <input
             type="text"
+            id="lastName"
             name="lastName"
             value={formData.lastName}
             onChange={handleInputChange}
@@ -66,9 +72,12 @@ const AddressForm = (props) => {
         </div>
       </div>
       <div className="mb-4">
-        <label className="block mb-2 font-medium">Address</label>
+        <label htmlFor="address" className="block mb-2 font-medium">
+          Address
+        </label>
         <input
           type="text"
+          id="address"
           name="address"
           value={formData.address}
           onChange={handleInputChange}
@@ -80,9 +89,12 @@ const AddressForm = (props) => {
       </div>
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <label className="block mb-2 font-medium">City</label>
+          <label htmlFor="city" className="block mb-2 font-medium">
+            City
+          </label>
           <input
             type="text"
+            id="city"
             name="city"
             value={formData.city}
             onChange={handleInputChange}
@@ -91,9 +103,12 @@ const AddressForm = (props) => {
           {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
         </div>
         <div>
-          <label className="block mb-2 font-medium">Zipcode</label>
+          <label htmlFor="zipcode" className="block mb-2 font-medium">
+            Zipcode
+          </label>
           <input
             type="text"
+            id="zipcode"
             name="zipcode"
             value={formData.zipcode}
             onChange={handleInputChange}
@@ -105,8 +120,11 @@ const AddressForm = (props) => {
         </div>
       </div>
       <div className="mb-6">
-        <label className="block mb-2 font-medium">Country</label>
+        <label htmlFor="country" className="block mb-2 font-medium">
+          Country
+        </label>
         <select
+          id="country"
           name="country"
           value={formData.country}
           onChange={handleInputChange}

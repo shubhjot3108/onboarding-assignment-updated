@@ -14,17 +14,9 @@ const mockProduct = {
 describe("ProductItem Component", () => {
   it("renders the product details correctly", () => {
     render(<ProductItem product={mockProduct} />);
-
-    // Check for product title
     expect(screen.getByText(/Test Product/i)).toBeInTheDocument();
-
-    // Check for product price
     expect(screen.getByText(/\$29.99/)).toBeInTheDocument();
-
-    // Check for product rating
     expect(screen.getByText(/Rating: 4.5/)).toBeInTheDocument();
-
-    // Check if image is rendered with the correct src and alt
     const image = screen.getByRole("img");
     expect(image).toHaveAttribute("src", mockProduct.image);
     expect(image).toHaveAttribute("alt", mockProduct.title);

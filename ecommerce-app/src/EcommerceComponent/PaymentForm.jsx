@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
 const PaymentForm = (props) => {
-    const { handlePayment, nextButtonText } = props;
+  const { handlePayment, nextButtonText } = props;
   const [formData, setFormData] = useState({
     cardholderName: "",
     cardNumber: "",
     expiryMonth: "",
     expiryYear: "",
-    cvc: ""
+    cvc: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -23,11 +23,15 @@ const PaymentForm = (props) => {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.cardholderName) newErrors.cardholderName = "Cardholder name is required.";
-    if (!formData.cardNumber || formData.cardNumber.length !== 16) newErrors.cardNumber = "Card number must be 16 digits.";
-    if (!formData.expiryMonth) newErrors.expiryMonth = "Expiry month is required.";
+    if (!formData.cardholderName)
+      newErrors.cardholderName = "Cardholder name is required.";
+    if (!formData.cardNumber || formData.cardNumber.length !== 16)
+      newErrors.cardNumber = "Card number must be 16 digits.";
+    if (!formData.expiryMonth)
+      newErrors.expiryMonth = "Expiry month is required.";
     if (!formData.expiryYear) newErrors.expiryYear = "Expiry year is required.";
-    if (!formData.cvc || formData.cvc.length !== 3) newErrors.cvc = "CVC must be 3 digits.";
+    if (!formData.cvc || formData.cvc.length !== 3)
+      newErrors.cvc = "CVC must be 3 digits.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -43,9 +47,12 @@ const PaymentForm = (props) => {
   return (
     <form onSubmit={onSubmit}>
       <div className="mb-4">
-        <label className="block mb-2 font-medium">Cardholder Name</label>
+        <label htmlFor="cardholderName" className="block mb-2 font-medium">
+          Cardholder Name
+        </label>
         <input
           type="text"
+          id="cardholderName"
           name="cardholderName"
           value={formData.cardholderName}
           onChange={handleInputChange}
@@ -56,9 +63,12 @@ const PaymentForm = (props) => {
         )}
       </div>
       <div className="mb-4">
-        <label className="block mb-2 font-medium">Card Number</label>
+        <label htmlFor="cardNumber" className="block mb-2 font-medium">
+          Card Number
+        </label>
         <input
           type="text"
+          id="cardNumber"
           name="cardNumber"
           value={formData.cardNumber}
           onChange={handleInputChange}
@@ -71,8 +81,11 @@ const PaymentForm = (props) => {
       </div>
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div>
-          <label className="block mb-2 font-medium">Expiry Month</label>
+          <label htmlFor="expiryMonth" className="block mb-2 font-medium">
+            Expiry Month
+          </label>
           <select
+            id="expiryMonth"
             name="expiryMonth"
             value={formData.expiryMonth}
             onChange={handleInputChange}
@@ -90,8 +103,11 @@ const PaymentForm = (props) => {
           )}
         </div>
         <div>
-          <label className="block mb-2 font-medium">Expiry Year</label>
+          <label htmlFor="expiryYear" className="block mb-2 font-medium">
+            Expiry Year
+          </label>
           <select
+            id="expiryYear"
             name="expiryYear"
             value={formData.expiryYear}
             onChange={handleInputChange}
@@ -109,18 +125,19 @@ const PaymentForm = (props) => {
           )}
         </div>
         <div>
-          <label className="block mb-2 font-medium">CVC</label>
+          <label htmlFor="cvc" className="block mb-2 font-medium">
+            CVC
+          </label>
           <input
             type="text"
+            id="cvc"
             name="cvc"
             value={formData.cvc}
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded-lg"
             maxLength={3}
           />
-          {errors.cvc && (
-            <p className="text-red-500 text-sm">{errors.cvc}</p>
-          )}
+          {errors.cvc && <p className="text-red-500 text-sm">{errors.cvc}</p>}
         </div>
       </div>
       <button

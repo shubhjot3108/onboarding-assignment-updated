@@ -2,9 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilters } from "../redux/filterSlice";
 import { getProductList } from "../services/getproductList";
+import { useNavigate } from "react-router-dom";
 
 const useProducts = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const filtersRedux = useSelector((state) => state.filters.selectedFilters);
 
   const [productsData, setProductsData] = useState([]);
@@ -37,13 +39,7 @@ const useProducts = () => {
         setNoProductsFound(true);
       }
     },
-    [
-      getProductList,
-      setNoProductsFound,
-      setProductsData,
-      setCurrentPage,
-      setShowLoadMoreCTA,
-    ]
+    []
   );
 
   const fetchProductsHandler = useCallback(
@@ -58,12 +54,7 @@ const useProducts = () => {
       setCurrentCategoryString(categoriesString);
       setPrice({ minPrice, maxPrice });
     },
-    [
-      fetchProducts,
-      setProductsData,
-      setCurrentCategoryString,
-      setPrice,
-    ]
+    [fetchProducts]
   );
 
   const handleFilterChange = (selectedFilters) => {
@@ -85,6 +76,19 @@ const useProducts = () => {
       minPrice: minPriceUpdated,
       maxPrice: maxPriceUpdated,
     });
+  };
+
+  const handleProductClick = (e) => {
+    const wrappingDiv = e.target.closest(".product-card");
+    if (wrappingDiv) {
+      const productId = wrappingDiv.getAttribute("data-id");
+      if (productId) {
+        console.log("Clicked Product ID:", productId);
+        navigate(`/productDetails?productId=${productId}`);
+      }
+    } else {
+      console.log("No wrapping div found!");
+    }
   };
 
   useEffect(() => {
@@ -113,6 +117,7 @@ const useProducts = () => {
     fetchProducts,
     fetchProductsHandler,
     handleFilterChange,
+    handleProductClick,
     setCurrentPage,
     price,
     setPrice,

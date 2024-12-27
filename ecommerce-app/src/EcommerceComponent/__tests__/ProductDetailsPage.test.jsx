@@ -1,102 +1,72 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { useDispatch,useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import ProductDetails from '../ProductDetailsPage';
-import { getProductDetails } from '../../services/getProductDetails';
-import { addToCart } from '../../redux/cartSlice';
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import ProductDetails from "../ProductDetailsPage";
+import useProductDetails from "../../shared/useProductDetails";
 
-jest.mock('../../services/getProductDetails');
+jest.mock("../../shared/useProductDetails");
+jest.mock("../../shared/headerComponent", () => () => <div>HeaderComponent</div>);
 jest.mock("../../assets/productImage.webp", () => "placeholderImage.jpg");
 
-jest.mock('react-redux', () => ({
-    useDispatch: jest.fn(),
-    useSelector: jest.fn()
-  }));
-jest.mock('react-toastify', () => ({
-  toast: {
-    success: jest.fn(),
-  },
-}));
+const mockProductDetails = {
+  title: "Test Product",
+  price: 100,
+  description: "This is a test product."
+};
 
-describe('ProductDetails Component', () => {
-  let dispatch;
+const mockUseProductDetails = {
+  productDetails: mockProductDetails,
+  quantity: 1,
+  setQuantity: jest.fn(),
+  addToCartHandler: jest.fn(),
+  totalQuantity: 2,
+};
 
+describe("ProductDetails Component", () => {
   beforeEach(() => {
-    dispatch = jest.fn();
-    useDispatch.mockReturnValue(dispatch);
-    getProductDetails.mockResolvedValue({
-      title: 'Test Product',
-      price: 100,
-      description: 'Test product description',
-    });
+    useProductDetails.mockReturnValue(mockUseProductDetails);
   });
 
-  it('should render product details correctly', async () => {
-    render(
-      <Router>
-        <ProductDetails />
-      </Router>
-    );
-    await waitFor(() => screen.getByText('Test Product'));
-    expect(screen.getByText('Test Product')).toBeInTheDocument();
-    expect(screen.getByText('$100')).toBeInTheDocument();
-    expect(screen.getByText('Test product description')).toBeInTheDocument();
+  it("renders product details correctly", () => {
+    render(<ProductDetails />);
+
+    expect(screen.getByText("Test Product")).toBeInTheDocument();
+    expect(screen.getByText("$100")).toBeInTheDocument();
+    expect(screen.getByText("This is a test product.")).toBeInTheDocument();
+    expect(screen.getByText("Free standard shipping")).toBeInTheDocument();
+    expect(screen.getByText("Free Returns")).toBeInTheDocument();
   });
 
-  it('should handle quantity change correctly', async () => {
-    render(
-      <Router>
-        <ProductDetails />
-      </Router>
-    );
+  it("renders the QuantitySelector and handles increment and decrement actions", () => {
+    render(<ProductDetails />);
 
-    const incrementButton = screen.getByText('+');
-    const decrementButton = screen.getByText('−');
-    const quantityInput = screen.getByDisplayValue('1');
+    const incrementButton = screen.getByText("+");
+    const decrementButton = screen.getByText("−");
 
-    // Increment quantity
     fireEvent.click(incrementButton);
-    expect(quantityInput.value).toBe('2');
+    expect(mockUseProductDetails.setQuantity).toHaveBeenCalled();
 
-    // Decrement quantity
     fireEvent.click(decrementButton);
-    expect(quantityInput.value).toBe('1');
+    expect(mockUseProductDetails.setQuantity).toHaveBeenCalled();
   });
 
-  it('should not decrement quantity below 1', async () => {
-    render(
-      <Router>
-        <ProductDetails />
-      </Router>
-    );
+  it("handles Add to Cart button click", () => {
+    render(<ProductDetails />);
 
-    const decrementButton = screen.getByText('−');
-    const quantityInput = screen.getByDisplayValue('1');
-
-    // Attempt to decrement below 1
-    fireEvent.click(decrementButton);
-    expect(quantityInput.value).toBe('1');
-  });
-
-  it('should add the product to the cart and show a success toast', async () => {
-    render(
-      <Router>
-        <ProductDetails />
-      </Router>
-    );
-    await waitFor(() => screen.getByText('Test Product'));
-    const addToCartButton = screen.getByText('Add to Cart - $100');
+    const addToCartButton = screen.getByText(/Add to Cart/i);
     fireEvent.click(addToCartButton);
-    expect(dispatch).toHaveBeenCalledWith(
-      addToCart({
-        id: null,
-        title: 'Test Product',
-        price: 100,
-        quantity: 1,
-      })
-    );
-    expect(toast.success).toHaveBeenCalledWith('Test Product added to the cart!');
+
+    expect(mockUseProductDetails.addToCartHandler).toHaveBeenCalled();
+  });
+
+  it("displays the correct total price on the Add to Cart button", () => {
+    render(<ProductDetails />);
+
+    expect(screen.getByText("Add to Cart - $100")).toBeInTheDocument();
+  });
+
+  it("renders the HeaderComponent with the correct cart count", () => {
+    render(<ProductDetails />);
+
+    expect(screen.getByText("HeaderComponent")).toBeInTheDocument();
   });
 });
