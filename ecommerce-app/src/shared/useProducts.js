@@ -8,7 +8,6 @@ const useProducts = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const filtersRedux = useSelector((state) => state.filters.selectedFilters);
-
   const [productsData, setProductsData] = useState([]);
   const [showLoadMoreCTA, setShowLoadMoreCTA] = useState(false);
   const [currentPageValue, setCurrentPage] = useState(1);

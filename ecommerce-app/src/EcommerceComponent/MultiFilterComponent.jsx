@@ -1,3 +1,4 @@
+import React from "react";
 import { getProductCategories } from "../services/getAllProductCategories";
 import { useEffect, useState } from "react";
 import { initialFilters } from "./constants";

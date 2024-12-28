@@ -10,7 +10,6 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { MemoryRouter } from "react-router-dom";
 import Checkout from "../CheckoutComponent";
-import { toast } from "react-toastify";
 
 jest.mock("../../shared/headerComponent", () => () => (
   <div>Mock HeaderComponent</div>

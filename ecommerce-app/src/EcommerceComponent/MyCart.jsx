@@ -28,7 +28,6 @@ const MyCart = () => {
   return (
     <>
       <HeaderComponent currentComponent={"My Cart"} cartCount={totalQuantity} />
-
       <div className="container mx-auto p-6">
         <div className="grid grid-cols-3 gap-8">
           <div className="col-span-2">

@@ -27,7 +27,6 @@ const ProductsPage = () => {
         <div className="mr-6">
           <MultiFilterComponent applyFilters={handleFilterChange} />
         </div>
-
         <div className="flex flex-col items-center h-[80vh] overflow-y-auto">
           {noProductsFound ? (
             <span className="text-[1.4rem] font-bold mt-[10rem] mr-[12rem] w-[24rem] text-center">
