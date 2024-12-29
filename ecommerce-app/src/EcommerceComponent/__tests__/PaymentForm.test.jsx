@@ -10,7 +10,7 @@ describe("PaymentForm Component", () => {
       <PaymentForm handlePayment={mockHandlePayment} nextButtonText="Pay Now" />
     );
 
-  test("renders form inputs and button", () => {
+  it("renders form inputs and button", () => {
     renderComponent();
 
     expect(screen.getByLabelText(/Cardholder Name/i)).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("PaymentForm Component", () => {
     expect(screen.getByRole("button", { name: /Pay Now/i })).toBeInTheDocument();
   });
 
-  test("shows validation errors when form is submitted empty", () => {
+  it("shows validation errors when form is submitted empty", () => {
     renderComponent();
 
     fireEvent.click(screen.getByRole("button", { name: /Pay Now/i }));
@@ -33,7 +33,7 @@ describe("PaymentForm Component", () => {
     expect(screen.getByText(/CVC must be 3 digits/i)).toBeInTheDocument();
   });
 
-  test("calls handlePayment with valid form data", () => {
+  it("calls handlePayment with valid form data", () => {
     renderComponent();
 
     fireEvent.change(screen.getByLabelText(/Cardholder Name/i), {
@@ -63,7 +63,7 @@ describe("PaymentForm Component", () => {
     });
   });
 
-  test("does not call handlePayment with invalid form data", () => {
+  it("does not call handlePayment with invalid form data", () => {
     renderComponent();
 
     fireEvent.change(screen.getByLabelText(/Card Number/i), {

@@ -17,6 +17,14 @@ const initialState = {
   },
 };
 
+const renderWithProviders = (ui, { store }) => {
+  return render(
+    <Provider store={store}>
+      {ui}
+    </Provider>
+  );
+};
+
 describe("MultiFilterComponent", () => {
   let store;
   const mockApplyFilters = jest.fn();
@@ -27,10 +35,9 @@ describe("MultiFilterComponent", () => {
   });
 
   it("renders the component with initial elements", () => {
-    render(
-      <Provider store={store}>
-        <MultiFilterComponent applyFilters={mockApplyFilters} />
-      </Provider>
+    renderWithProviders(
+      <MultiFilterComponent applyFilters={mockApplyFilters} />,
+      { store }
     );
 
     expect(screen.getByText("Filters")).toBeInTheDocument();
@@ -43,10 +50,9 @@ describe("MultiFilterComponent", () => {
     const mockCategories = ["Electronics", "Clothing", "Books"];
     getProductCategories.mockResolvedValueOnce(mockCategories);
 
-    render(
-      <Provider store={store}>
-        <MultiFilterComponent applyFilters={mockApplyFilters} />
-      </Provider>
+    renderWithProviders(
+      <MultiFilterComponent applyFilters={mockApplyFilters} />,
+      { store }
     );
 
     await waitFor(() => {
@@ -62,10 +68,9 @@ describe("MultiFilterComponent", () => {
     const mockCategories = ["Electronics", "Clothing"];
     getProductCategories.mockResolvedValueOnce(mockCategories);
 
-    render(
-      <Provider store={store}>
-        <MultiFilterComponent applyFilters={mockApplyFilters} />
-      </Provider>
+    renderWithProviders(
+      <MultiFilterComponent applyFilters={mockApplyFilters} />,
+      { store }
     );
 
     await waitFor(() => {
@@ -82,10 +87,9 @@ describe("MultiFilterComponent", () => {
     const mockCategories = ["Electronics", "Clothing"];
     getProductCategories.mockResolvedValueOnce(mockCategories);
 
-    render(
-      <Provider store={store}>
-        <MultiFilterComponent applyFilters={mockApplyFilters} />
-      </Provider>
+    renderWithProviders(
+      <MultiFilterComponent applyFilters={mockApplyFilters} />,
+      { store }
     );
 
     await waitFor(() => {

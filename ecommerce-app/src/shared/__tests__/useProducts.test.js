@@ -32,16 +32,22 @@ const HookWrapper = ({ filters = null }) => {
 
   return (
     <div data-testid="product-list">
-      {productsData?.map((product) => (
-        <div
-          key={product.id}
-          className="product-card"
-          data-id={product.id}
-          onClick={handleProductClick}
-        >
-          {product.title}
+      {!!productsData.length ? (
+        <div>
+          {productsData.map((product) => (
+            <div
+              key={product.id}
+              className="product-card"
+              data-id={product.id}
+              onClick={handleProductClick}
+            >
+              {product.title}
+            </div>
+          ))}
         </div>
-      ))}
+      ) : (
+        <div>No products found</div>
+      )}
     </div>
   );
 };
@@ -84,17 +90,13 @@ describe("useProducts Hook", () => {
 
   it("should initialize with correct default values", () => {
     const store = mockStore(initialState);
-
     renderWithProviders(<HookWrapper />, { store });
-
     expect(screen.getByTestId("product-list")).toBeInTheDocument();
   });
 
   it("should fetch products successfully on initial load", async () => {
     const store = mockStore(initialState);
-
     renderWithProviders(<HookWrapper />, { store });
-
     await waitFor(() => expect(getProductList).toHaveBeenCalledTimes(1));
     expect(screen.getByText("Product1")).toBeInTheDocument();
   });
@@ -111,7 +113,7 @@ describe("useProducts Hook", () => {
     renderWithProviders(<HookWrapper />, { store });
 
     await waitFor(() => expect(getProductList).toHaveBeenCalledTimes(1));
-    expect(screen.queryByText("Product1")).toBeNull();
+    expect(screen.getByText("No products found")).toBeInTheDocument();
   });
 
   it("should apply filters and fetch products with new filters", async () => {

@@ -57,6 +57,14 @@ const initialState = {
   orders: { orders: [] },
 };
 
+const renderWithProviders = (ui, { store }) => {
+  return render(
+    <Provider store={store}>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </Provider>
+  );
+};
+
 describe("Checkout Component", () => {
   let store;
 
@@ -65,45 +73,27 @@ describe("Checkout Component", () => {
   });
 
   it("renders the Checkout component with address form by default", () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Checkout />
-        </MemoryRouter>
-      </Provider>
-    );
+    renderWithProviders(<Checkout />, { store });
 
     expect(screen.getByText("Mock HeaderComponent")).toBeInTheDocument();
     expect(screen.getByText("Checkout")).toBeInTheDocument();
     expect(screen.getByText("Your Cart")).toBeInTheDocument();
   });
 
-  it("moves to payment step after address form submission", () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Checkout />
-        </MemoryRouter>
-      </Provider>
-    );
+  it("moves to payment step after address form submission", async () => {
+    renderWithProviders(<Checkout />, { store });
 
     act(() => {
       fireEvent.click(screen.getByText("Mock AddressForm Submit"));
     });
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(screen.getByText("Mock PaymentForm Submit")).toBeInTheDocument();
     });
   });
 
   it("displays cart items and calculates subtotal correctly", () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Checkout />
-        </MemoryRouter>
-      </Provider>
-    );
+    renderWithProviders(<Checkout />, { store });
 
     expect(screen.getByText("Item 1")).toBeInTheDocument();
     expect(screen.getByText("Quantity: 2")).toBeInTheDocument();

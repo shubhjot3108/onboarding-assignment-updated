@@ -31,7 +31,7 @@ describe("Orders Component", () => {
       </Provider>
     );
 
-  test("displays message when there are no orders", () => {
+  it("displays message when there are no orders", () => {
     const store = mockStore({ orders: { orders: [] } });
     renderWithStore(store);
 
@@ -40,7 +40,7 @@ describe("Orders Component", () => {
     ).toBeInTheDocument();
   });
 
-  test("renders a table with order details when orders are present", () => {
+  it("renders a table with order details when orders are present", () => {
     const mockOrders = [
       {
         orderNo: "12345",

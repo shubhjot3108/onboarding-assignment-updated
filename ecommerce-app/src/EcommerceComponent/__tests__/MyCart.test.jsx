@@ -46,7 +46,6 @@ describe("MyCart Component", () => {
 
   it("renders the cart items and totals correctly", () => {
     renderWithProviders(<MyCart />);
-
     expect(screen.getByText("Your Cart")).toBeInTheDocument();
     expect(screen.getByText("Product 1")).toBeInTheDocument();
     expect(screen.getByText("Product 2")).toBeInTheDocument();
@@ -77,7 +76,6 @@ describe("MyCart Component", () => {
     });
 
     renderWithProviders(<MyCart />);
-
     expect(screen.getByText("Your cart is empty")).toBeInTheDocument();
   });
 });

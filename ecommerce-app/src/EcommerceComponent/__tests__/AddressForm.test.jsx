@@ -13,7 +13,7 @@ describe("AddressForm", () => {
     mockHandleSubmit.mockClear();
   });
 
-  test("renders the form with all fields and submit button", () => {
+  it("renders the form with all fields and submit button", () => {
     render(<AddressForm {...defaultProps} />);
 
     expect(screen.getByLabelText(/First Name/i)).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe("AddressForm", () => {
     expect(screen.getByText(/Next/i)).toBeInTheDocument();
   });
 
-  test("shows validation errors when required fields are empty", () => {
+  it("shows validation errors when required fields are empty", () => {
     render(<AddressForm {...defaultProps} />);
 
     fireEvent.click(screen.getByText(/Next/i));
@@ -38,7 +38,7 @@ describe("AddressForm", () => {
     expect(screen.getByText(/Country is required/i)).toBeInTheDocument();
   });
 
-  test("submits the form when all fields are valid", () => {
+  it("submits the form when all fields are valid", () => {
     render(<AddressForm {...defaultProps} />);
 
     fireEvent.change(screen.getByLabelText(/First Name/i), {
@@ -73,7 +73,7 @@ describe("AddressForm", () => {
     expect(mockHandleSubmit).toHaveBeenCalledTimes(1);
   });
 
-  test("does not submit the form when validation fails", () => {
+  it("does not submit the form when validation fails", () => {
     render(<AddressForm {...defaultProps} />);
 
     fireEvent.change(screen.getByLabelText(/First Name/i), {

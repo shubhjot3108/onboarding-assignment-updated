@@ -81,14 +81,14 @@ describe("ProductsPage Component", () => {
     expect(screen.getByText(/No Product found for this selection/i)).toBeInTheDocument();
   });
 
-  it("handles filter change", () => {
+  it("handles filter change correctly", () => {
     render(<ProductsPage />);
     const applyFiltersButton = screen.getByText("Apply Filters");
     fireEvent.click(applyFiltersButton);
     expect(mockHandleFilterChange).toHaveBeenCalled();
   });
 
-  it("handles product click", () => {
+  it("handles product click correctly", () => {
     render(<ProductsPage />);
     const productCard = screen.getByText("Product 1");
     fireEvent.click(productCard);
